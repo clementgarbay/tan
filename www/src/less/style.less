@@ -1,0 +1,529 @@
+// General
+
+.no-margin {
+	margin: 0 !important;
+}
+
+*:not(input) {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.selectable, .selectable * {
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+}
+
+// Content container
+
+.content {
+	position: relative;
+	height: 100%;
+	background: #f7f7f7;
+
+	&.ios {
+		padding-top: 20px;
+		
+		.sidebar {
+			top: 20px;
+		}
+
+		.app {
+			box-shadow: none;
+		}
+	}
+}
+
+// Sidebar (left side)
+
+.sidebar .scrollable {
+	padding: 0px !important;
+
+	.scrollable-header {
+		position: relative;
+
+		img {
+			height: 30px;
+		}
+	}
+	.scrollable-content .list-group {
+		.list-group-item {
+			&.a {
+				color: #fff;
+				background-color: #3ea347;
+				border-color: #3ea347;
+				z-index: 2;
+			}
+			
+			&.disabled {
+				color: #999;
+				pointer-events: none;
+				cursor: default;
+			}
+
+			i {
+				margin-right: 5px;
+				font-size: 11px;
+			}
+		}
+	}
+}
+
+// App (right side)
+
+.app {
+
+	// App navbar
+	.navbar {
+		.navbar-brand span i {
+			margin-right: 5px;
+		}
+		.btn-group.pull-left {
+			.btn {
+				padding-left: 15px;
+			}
+		}
+		.btn-group.pull-right {
+			.btn {
+				padding-right: 15px;
+			}
+		}
+	}
+
+	// App body
+	.app-body {
+
+		// Loader
+		.app-content-loading {
+			position: absolute;
+			top: 0; left: 0;
+			width: 100%; height: 100%;
+
+			i.fa {
+				position: absolute;
+				top: 50%; left: 50%;
+				width:30px;
+				margin: -15px;
+				font-size: 30px;
+				z-index: 10;
+			}
+		}
+
+		#homeContent {
+			margin: 30px auto;
+			font-size: 2em;
+			opacity: .5;
+			text-align: center;
+			text-shadow: 1px 1px 1px #9d9d9d;
+		}
+		
+		#timetablesContent {
+			.input-group {
+				margin-bottom: 20px;
+			}
+
+			.section {
+				.list-group .list-group-item {
+					line-height: 18px;
+					vertical-align: middle;
+				}
+			}
+
+			fieldset {
+				legend {
+					position: relative;
+					margin-bottom: 10px;
+
+					.legend-btn {
+						position: absolute;
+						height: 100%;
+						
+						button {
+							position: absolute;
+							top: 50%;
+							height: 34px;
+							margin: -17px 0;
+							padding-left: 0;
+						}
+					}
+
+					.legend-info {
+						line-height: 1;
+						margin-left: 25px;
+						padding: 10px 0;
+
+						> small {
+							display: block;
+							height: 20px;
+							line-height: 20px;
+							font-size: .7em;
+							vertical-align: middle;
+							text-overflow: ellipsis;
+							overflow: hidden
+						}
+					}
+				}
+				
+				.nav-container {
+					overflow: hidden;
+
+					.nav {
+						height: 38px;
+						width: 800px; // valeur arbitraire
+						border: none;
+						box-shadow: inset 0 -1px 1px #ddd;
+						overflow: hidden;
+
+						& > li > a {
+							padding: 8px;
+						}
+
+						&:before {
+							content: '';
+							position: absolute;
+							top: 0; bottom: 0;
+							right: 0;
+							width: 20px;
+							background-color: red;
+						}
+					}
+				}
+
+				.section {
+
+					div.btn-group a.btn {
+						text-overflow: ellipsis;
+						overflow: hidden;
+					}
+					
+					p {
+						margin: 20px 0 10px 0;
+						
+						.chip {
+							display: inline-block;
+							float: left;
+							width: 16px;
+							height: 16px;
+							margin: 2px 10px 2px 0;
+							border-radius: 8px;
+
+							&.r {
+								background-color: pink;
+							}
+							&.v {
+								background-color: green;
+							}
+							&.b {
+								background-color: blue;
+							}
+							&.j {
+								background-color: yellow;
+							}
+							&.g {
+								background-color: gray;
+							}
+						}
+
+						&.trafic {
+							line-height: 20px;
+						}
+
+						&.info {
+							white-space: pre-line;
+						}
+
+					}
+
+					.table {
+						margin: 20px 0;
+
+						tr td {
+							&:first-child {
+								width: 40px;
+							}
+
+							span {
+								margin-right: 2%;
+								
+								&:first-child {
+									margin-left: 2%;
+								}
+								
+								&.active {
+									font-weight: bold;
+								}
+							}
+						}
+					}
+
+					.btn.favorite {
+						margin-top: 20px;
+					}
+				}
+			}
+		}
+
+		#infosContent {
+			.info-offLine {
+				text-align: center;
+				font-style: italic;
+			}
+
+			.list-group .list-group-item {
+				.list-group-item-header {
+					line-height: 40px;
+
+					h4 {
+						margin: 10px 0 0 0;
+					}
+
+					small {
+						display: block;
+						line-height: 2;
+						margin: 0 0 10px 0;
+						font-style: italic;
+					}
+				}
+
+				p {
+					white-space: pre-line;
+				}
+			}
+		}
+
+		#offlineContent {
+			.center {
+				text-align: center;
+
+				p {
+					margin: 20px 0;
+				}
+
+				small {
+					display: block;
+					margin-bottom: 5px;
+				}
+			} 
+
+			.list-group {
+				.list-group-item {
+					padding-right: 25px;
+			
+					small {
+						display: block;
+					}
+			
+					i {
+						position: absolute;
+						top: 50%;
+						right: 0;
+						margin: -7px 15px 0 0;
+					}
+				}
+
+				.list-group-btn {
+					margin-top: 20px;
+				}
+			}
+		}
+	}
+}
+
+// Colors of the lines
+span.line {
+	width: 18px;
+	height: 18px;
+	padding: 2px;
+	font-weight: 500;
+	color: #555;
+
+	&.line_1, &.line_2, &.line_3, &.line_4 {
+		padding: 2px 6px;
+		color: white;
+	}
+	&.line_1 {
+		background-color: #007945;
+	}
+	&.line_2 {
+		background-color: #E42A37;
+	}
+	&.line_3 {
+		background-color: #0277BA;
+	}
+	&.line_4 {
+		background-color: #FDC613;
+	}
+	&.line_c1 {
+		background-color: #28B4E4;
+	}
+	&.line_c2 {
+		background-color: #ED7602;
+	}
+	&.line_c3 {
+		background-color: #F7B222;
+	}
+	&.line_c4 {
+		background-color: #77AD1A;
+	}
+	&.line_c5 {
+		background-color: #B5DDF2;
+	}
+	&.line_c6 {
+		background-color: #BCA9CF;
+	}
+	&.line_c7 {
+		background-color: #BFD034;
+	}
+	&.line_10 {
+		background-color: #F8EB20;
+	}
+	&.line_11 {
+		background-color: #E6C288;
+	}
+	&.line_12 {
+		background-color: #B4DCF1;
+	}
+	&.line_20 {
+		background-color: #EFE220;
+	}
+	&.line_23 {
+		background-color: #20B4E3;
+	}
+	&.line_25 {
+		background-color: #F7E820;
+	}
+	&.line_26 {
+		background-color: #139532;
+	}
+	&.line_27 {
+		background-color: #B3DBF0;
+	}
+	&.line_28 {
+		background-color: #B4DCF1;
+	}
+	&.line_29 {
+		background-color: #F4BAC4;
+	}
+	&.line_30 {
+		background-color: #FDEE0B;
+	}
+	&.line_33 {
+		background-color: #F7BBC5;
+	}
+	&.line_36 {
+		background-color: #00A3A5;
+	}
+	&.line_39 {
+		background-color: #F4B9C3;
+	}
+	&.line_40 {
+		background-color: #F7E820;
+	}
+	&.line_42 {
+		background-color: #BECF34;
+	}
+	&.line_47 {
+		background-color: #BEABD0;
+	}
+	&.line_50 {
+		background-color: #F5E720;
+	}
+	&.line_54 {
+		background-color: #C0D034;
+	}
+	&.line_59 {
+		background-color: #ECB6C0;
+	}
+	&.line_66 {
+		background-color: #124291;
+	}
+	&.line_67 {
+		background-color: #124291;
+	}
+	&.line_68 {
+		background-color: #124291;
+	}
+	&.line_69 {
+		background-color: #C08938;
+	}
+	&.line_70 {
+		background-color: #FCED0B;
+	}
+	&.line_71 {
+		background-color: #BFD035;
+	}
+	&.line_73 {
+		background-color: #FDEA0B;
+	}
+	&.line_74 {
+		background-color: #BECF34;
+	}
+	&.line_75 {
+		background-color: #EAC489;
+	}
+	&.line_77 {
+		background-color: #8ED2EF;
+	}
+	&.line_78 {
+		background-color: #F7B222;
+	}
+	&.line_79 {
+		background-color: #F5BBC5;
+	}
+	&.line_80 {
+		background-color: #FEED0B;
+	}
+	&.line_81 {
+		background-color: #19A3A5;
+	}
+	&.line_84 {
+		background-color: #BECF34;
+	}
+	&.line_85 {
+		background-color: #F4B9C3;
+	}
+	&.line_86 {
+		background-color: #27B3E3;
+	}
+	&.line_87 {
+		background-color: #F8B323;
+	}
+	&.line_88 {
+		background-color: #F8B522;
+	}
+	&.line_89 {
+		background-color: #76AD20;
+	}
+	&.line_90 {
+		background-color: #BF8838;
+	}
+	&.line_91 {
+		background-color: #009433;
+	}
+	&.line_93 {
+		background-color: #01A4A6;
+	}
+	&.line_95 {
+		background-color: #BFCF35;
+	}
+	&.line_96 {
+		background-color: #F7B222;
+	}
+	&.line_97 {
+		background-color: #BDAAD0;
+	}
+	&.line_98 {
+		background-color: #F8B422;
+	}
+	&.line_99 {
+		background-color: #F7B222;
+	}
+	&.line_na {
+		padding: 2px 4px;
+		background-color: #28B4E4;
+	}
+}

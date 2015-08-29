@@ -1,0 +1,17 @@
+<div id="infosContent" class="scrollable" ng-controller="InfosCtrl">
+	<div class="scrollable-content section">
+		
+		<div class="info-offLine" ng-if="!onLine()">Attention, vous utilisez le mode hors connexion, certaines informations peuvent ne pas être à jour.</div>
+
+		<div class="list-group selectable">
+			<div class="list-group-item" ng-repeat="info in infos.opendata.answer.data.ROOT.LISTE_INFOTRAFICS.INFOTRAFIC">
+				<div class="list-group-item-header">
+					<h4>{{info.INTITULE}}</h4>
+					<small>À partir du {{info.DATE_DEBUT}} à {{info.HEURE_DEBUT}} <span ng-if="info.DATE_FIN">au {{info.DATE_FIN}} à {{info.HEURE_FIN}}</span></small>
+				</div>
+				<p>{{info.RESUME}}</p>
+			</div>
+		</div>
+
+	</div>
+</div>

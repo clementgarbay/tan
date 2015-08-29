@@ -1,0 +1,7 @@
+.DS_Store
+
+platforms/
+plugins/
+
+www/tmp/
+www/node_modules/

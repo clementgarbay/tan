@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>TAN</title>
+
+	<meta charset="utf-8" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+
+	<link rel="stylesheet" href="dist/css/mobile-angular-ui-hover.min.css" />
+	<link rel="stylesheet" href="dist/css/mobile-angular-ui-base.min.css" />
+	<link rel="stylesheet" href="dist/css/mobile-angular-ui-desktop.min.css" />
+
+	<link rel="stylesheet" href="dist/css/style.min.css" />
+
+	<script type="text/javascript" src="dist/js/angular.min.js"></script>
+	<script type="text/javascript" src="dist/js/angular-route.min.js"></script>
+	<script type="text/javascript" src="dist/js/angular-touch.min.js"></script>
+	<script type="text/javascript" src="dist/js/mobile-angular-ui.min.js"></script>
+
+	<script type="text/javascript" src="dist/js/lodash.min.js"></script>
+
+	<script type="text/javascript" src="dist/js/app.min.js"></script>
+</head>
+
+<body ng-app="App" ng-controller="AppCtrl">
+
+	<div class="content">
+		<div class="sidebar sidebar-left">
+			<div class="scrollable">
+				<h1 class="scrollable-header app-name"><a href="#"><img src="img/logo.png" draggable="false"></a></h1>  
+				<div class="scrollable-content">
+					<div class="list-group" ui-turn-off='uiSidebarLeft'>
+						<a href="#/timetables" class="list-group-item" ng-class="{'a': path() == 'timetables'}">Horaires</a>
+						<a href="#/infos" class="list-group-item" ng-class="{'a': path() == 'infos'}">InfoTrafic</a>
+						<a href="#/maps" class="list-group-item" ng-class="{'a': path() == 'maps'}">Plans du réseau</a>
+						<a href="#/offline" class="list-group-item" ng-class="{'a': path() == 'offline'}">Grilles horaires enregistrées</a>
+						<a href="" class="list-group-item" ng-click="openExternal('http://www.tan.fr')"><i class="fa fa-external-link"></i> Site officiel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="app" ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
+			<div class="navbar navbar-app navbar-absolute-top">
+				<div class="navbar-brand navbar-brand-center" ui-yield-to='title'>
+					<span ng-show="path() == 'timetables'"><i class="fa fa-clock-o"></i> Horaires</span>
+					<span ng-show="path() == 'infos'"><i class="fa fa-info"></i> InfoTrafic</span>
+					<span ng-show="path() == 'maps'"><i class="fa fa-map-o"></i> Plans du réseau</span>
+					<span ng-show="path() == 'offline'">Grilles horaires enregistrées</span>
+				</div>
+
+				<div class="btn-group pull-left">
+					<div ui-toggle='uiSidebarLeft' class="btn sidebar-toggle">
+						<i class="fa fa-bars"></i>
+					</div>
+				</div>
+
+				<div class="btn-group pull-right">
+					<div class="btn" title="Mettre à jour" ng-show="path() != ''" ng-click="refresh()">
+						<i class="fa fa-refresh"></i>
+					</div>
+				</div>
+			</div>
+
+			<div class="app-body" ng-class="{loading: loading}">
+				<div ng-show="loading" class="app-content-loading">
+					<i class="fa fa-spinner fa-spin loading-spinner"></i>
+				</div>
+				<div class="app-content">
+					<ng-view></ng-view>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript">
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		if (device.platform == "iOS") {
+			angular.element(document.querySelector('.content')).addClass('ios');
+		}
+	}
+
+	window.shouldRotateToOrientation = function (degrees) {
+		return true;
+	}
+	</script>
+</body>
+</html>

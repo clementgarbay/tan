@@ -1,0 +1,124 @@
+<div id="timetablesContent" class="scrollable" ng-controller="TimetablesCtrl">
+	<div class="scrollable-content section">
+
+		<div ng-show="!params.stationCode">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Arrêt" spellcheck="false" autocomplete="off" ng-model="searchStationName">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" ng-click="searchByLocalization()">
+						<i class="fa fa-location-arrow"></i>
+					</button>
+				</span>
+			</div>
+
+			<div class="list-group">
+				<a class="list-group-item" href="#/timetables/{{station.codeLieu}}/{{station.libelle}}" ng-repeat="station in stations | filter: searchStationName">
+					<b>{{station.libelle}} <span ng-if="station.distance">({{station.distance}})</span></b> - 
+					<small ng-repeat="ligne in station.ligne">
+						<span class="line line_{{ligne.numLigne | lowercase}}" ng-if="ligne.numLigne != 'NA'">{{ligne.numLigne}}</span> 
+						<span class="line line_{{ligne.numLigne | lowercase}}" ng-if="ligne.numLigne == 'NA'"><i class="fa fa-plane"></i></span> 
+					</small> 
+					<i class="fa fa-chevron-right pull-right"></i>
+				</a>
+			</div>
+		</div>
+
+		<div ng-if="params.stationCode && params.stationName">
+			<fieldset>
+				<legend>
+					<div class="legend-btn">
+						<button type="button" class="btn btn-link" ng-click="previous()" ng-disabled="!onLine()">
+							<i class="fa fa-chevron-left"></i>
+						</button>
+					</div>
+					<div class="legend-info">
+						{{params.stationName}} 
+						<small ng-if="params.numLine">Ligne {{params.numLine}} direction {{station.directionName}}</small>
+					</div>
+				</legend>
+
+				<!-- TEMPS D'ATTENTE -->
+
+				<div ng-if="(station.data | keylength) > 0 && !params.numLine" ng-init="activeLine = 0">
+					<div class="nav-container">
+						<ul class="nav nav-tabs no-select" touchable>
+							<li ng-class="{'active': $parent.activeLine == numLine}" ng-repeat="(numLine, line) in station.data">
+								<a ng-click="$parent.activeLine = numLine">
+									<span class="line line_{{line.num | lowercase}}" ng-if="line.num == 'NA'"><i class="fa fa-plane"></i></span>  
+									<span class="line line_{{line.num | lowercase}}" ng-if="line.num != 'NA'">{{line.num}}</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="section" ng-if="$parent.activeLine == numLine" ng-repeat="(numLine, line) in station.data">
+						<div ng-init="activeDirection = 1">
+							<div class="btn-group justified nav-tabs">
+								<a class="btn btn-default" ng-class="{'active': activeDirection == numDirection}" ng-click="$parent.activeDirection = numDirection" ng-repeat="(numDirection, direction) in line.directions">{{direction.terminus}}</a>
+							</div>
+
+							<div ng-if="$parent.activeDirection == numDirection" ng-repeat="(numDirection, direction) in line.directions">
+								<div ng-if="direction.waitingTimes.length > 0">
+									<p>Prochain<span ng-if="direction.waitingTimes.length > 1">s</span> passage<span ng-if="direction.waitingTimes.length > 1">s</span> dans</p>
+									<ul>
+										<li ng-repeat="waitingTime in direction.waitingTimes">
+											{{waitingTime}}
+										</li>
+									</ul>
+									<a href="#/timetables/{{params.stationCode}}/{{params.stationName}}/{{$parent.activeLine}}/{{$parent.activeDirection}}"><i class="fa fa-calendar"></i> Afficher tous les horaires de la ligne</a>
+								</div>
+								<div ng-if="direction.waitingTimes.length == 0">
+									<p>Aucun passage</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- HORAIRES -->
+
+				<div ng-if="params.numLine && params.direction">
+					<div class="section">
+
+						<p ng-if="station.codeCouleur == 'R'" class="no-margin trafic">
+							<span class="chip r"></span> Jour rose
+							<small class="pull-right">{{station.ligne.libelleTrafic}}</small>
+						</p>
+						<p ng-if="station.codeCouleur == 'V'" class="no-margin trafic">
+							<span class="chip v"></span> Jour vert
+							<small class="pull-right">{{station.ligne.libelleTrafic}}</small>
+						</p>
+						<p ng-if="station.codeCouleur == 'B'" class="no-margin trafic">
+							<span class="chip b"></span> Jour bleu 
+							<small class="pull-right">{{station.ligne.libelleTrafic}}</small>
+						</p>
+						<p ng-if="station.codeCouleur == 'J'" class="no-margin trafic">
+							<span class="chip j"></span> Jour jaune 
+							<small class="pull-right">{{station.ligne.libelleTrafic}}</small>
+						</p>
+						<p ng-if="station.codeCouleur == 'G'" class="no-margin trafic">
+							<span class="chip g"></span> Jour gris 
+							<small class="pull-right">{{station.ligne.libelleTrafic}}</small>
+						</p>
+
+						<table class="table table-hover">
+							<tr id="tr{{horaire.heure}}" ng-repeat="horaire in station.horaires">
+								<td><b>{{horaire.heure}}</b></td>
+								<td><span id="td{{horaire.heure}}{{passage}}" ng-repeat="passage in horaire.passages">{{passage}} </span></td>
+							</tr>
+						</table>
+
+						<p><div ng-repeat="note in station.notes">{{note.code}} : {{note.libelle}}</div></p>
+
+						<p class="info">{{station.plageDeService}}</p>
+
+						<a class="btn btn-default btn-sm btn-block favorite" ng-if="station && !offline_isSaved(station)" ng-click="offline_save(station)">Enregistrer cette grille horaires</a>
+						<a class="btn btn-danger btn-sm btn-block favorite" ng-if="station && offline_isSaved(station)" ng-click="offline_remove(station)">Supprimer cette grille horaires</a>
+					</div>
+				</div>
+
+			</fieldset>
+		</div>
+
+	</div>
+</div>

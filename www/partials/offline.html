@@ -1,0 +1,18 @@
+<div id="offlineContent" class="scrollable" ng-controller="OfflineCtrl">
+	<div class="scrollable-content section">
+		<div class="center" ng-if="!savedStations || (savedStations | keylength) === 0">
+			<p>Aucune grille horaires enregistrée</p>
+			<small>Pour en ajouter, allez sur la grille voulue (via l'onglet Horaires quand vous disposez d'une connexion) et cliquez sur le bouton "Enregistrer cette grille horaires".</small>
+			<small>Vous pourrez ensuite les consulter sans connexion internet.</small>
+		</div>
+
+		<div class="list-group" ng-if="(savedStations | keylength) > 0">
+			<a class="list-group-item" href="#/timetables/{{savedStation.stationCode}}/{{savedStation.arret.libelle}}/{{savedStation.ligne.numLigne}}/{{savedStation.direction}}" ng-repeat="savedStation in savedStations">
+				{{savedStation.arret.libelle}} 
+				<small>Ligne {{savedStation.ligne.numLigne}} direction {{savedStation.directionName}}</small>
+				<i class="fa fa-chevron-right pull-right"></i>
+			</a>
+			<a class="btn btn-danger btn-sm btn-block list-group-btn" ng-click="offline_clear()">Supprimer toutes les grilles horaires</a>
+		</div>
+	</div>
+</div>
