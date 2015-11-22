@@ -1,4 +1,4 @@
-app.controller('TimetablesCtrl', ['$scope', '$route', '$routeParams', '$location', '$timeout', 'TanFactory', function ($scope, $route, $routeParams, $location, $timeout, TanFactory) {
+app.controller('TimetablesCtrl', ['$scope', '$log', '$route', '$routeParams', '$location', '$timeout', 'TanFactory', function ($scope, $log, $route, $routeParams, $location, $timeout, TanFactory) {
 
 	$scope.params = {};
 	$scope.params.stationCode = $routeParams.stationCode;
@@ -71,20 +71,20 @@ app.controller('TimetablesCtrl', ['$scope', '$route', '$routeParams', '$location
 
 		// Sinon, on l'a récupère via l'API
 		} else {
-			TanFactory.getStationTimeTables($scope.params.stationCode, $scope.params.numLine, $scope.params.direction).then(function (data) {
-				$scope.station = data;
+			TanFactory.getStationTimeTables($scope.params.stationCode, $scope.params.numLine, $scope.params.direction).then(function (station) {
+				$scope.station = station;
 				$scope.station.stationCode = $scope.params.stationCode;
 				$scope.station.direction = $scope.params.direction;
 				$scope.station.directionName = $scope.station.ligne["directionSens"+$scope.params.direction];
 
 				// On sélectionne les prochains horaires à venir
-				$timeout(function(){ 
+				$timeout(function(){
 					angular.forEach($scope.station.prochainsHoraires, function (item, key) {
 						angular.element(document.querySelector('#tr'+item.heure)).addClass('active');
 						angular.element(document.querySelector('#td'+item.heure+item.passages[0])).addClass('active');
 					});
 				}, 200);
-				
+
 				$scope.stopLoading();
 			}, function (error) {
 				$scope.error(error);
@@ -127,7 +127,7 @@ app.controller('TimetablesCtrl', ['$scope', '$route', '$routeParams', '$location
 		navigator.geolocation.getCurrentPosition(onSuccess, onError);
 	};
 
-	// Fonction précédent 
+	// Fonction précédent
 	$scope.previous = function () {
 		if ($scope.params.numLine) {
 			$location.path('/timetables/' + $scope.params.stationCode + "/" + $scope.params.stationName);
@@ -135,5 +135,5 @@ app.controller('TimetablesCtrl', ['$scope', '$route', '$routeParams', '$location
 			$location.path('/timetables');
 		}
 	};
-	
+
 }]);

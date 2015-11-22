@@ -1,14 +1,14 @@
-app.controller('InfosCtrl', ['$scope', 'TanFactory', function ($scope, TanFactory) {
-	
+app.controller('InfosCtrl', ['$scope', '$log', 'TanFactory', function ($scope, $log, TanFactory) {
+
 	$scope.startLoading();
 
 	// Si le navigateur est connecté à internet
 	if ($scope.onLine()) {
 		// Récupération des infos trafic via l'API
-		TanFactory.getInfoTrafic().then(function (data) {
-			$scope.infos = data;
-			localStorage.setItem('infoTrafic', JSON.stringify(data));
-			
+		TanFactory.getInfoTrafic().then(function (infos) {
+			$scope.infos = infos;
+			localStorage.setItem('infoTrafic', JSON.stringify($scope.infos));
+
 			$scope.stopLoading();
 		}, function (error) {
 			$scope.error(error);
