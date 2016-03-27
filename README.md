@@ -9,7 +9,6 @@ Application hybride iOS du Transport en commun de l'Agglomération Nantaise avec
 Initialisation de l'application iOS Cordova (et des plugins associés) :  
 ```
 ./init.sh
-
 ```
 
 Développement local :
@@ -20,7 +19,6 @@ cd www && grunt
 Pour compiler l'application Cordova :
 ```
 cordova build ios
-
 ```
 
 ## Données
