@@ -2,7 +2,7 @@
 	"name": "TAN",
 	"description": "Application TAN",
 	"author": "Clément GARBAY",
-	"version": "0.0.1",
+	"version": "0.1.1",
 	"devDependencies": {
 		"grunt": "^0.4.5",
 		"grunt-concurrent": "^2.0.1",

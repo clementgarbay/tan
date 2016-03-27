@@ -13,7 +13,7 @@ app.factory('TanFactory', ['$http', '$q', function ($http, $q) {
 			if (factory.stations !== null) {
 				factory.deferred.resolve(factory.stations);
 			} else {
-				$http.get("https://open.tan.fr/ewp/arrets.json")
+				$http.get("http://open.tan.fr/ewp/arrets.json")
 					.success(function (data, status) {
 						factory.deferred.resolve(data);
 					})
@@ -30,7 +30,7 @@ app.factory('TanFactory', ['$http', '$q', function ($http, $q) {
 			factory.deferred = $q.defer();
 			var positionOption = (position !== null) ? (position.coords.latitude + "/" + position.coords.longitude) : "";
 
-			$http.get("https://open.tan.fr/ewp/arrets.json/" + positionOption.replace(/\./g, ','))
+			$http.get("http://open.tan.fr/ewp/arrets.json/" + positionOption.replace(/\./g, ','))
 				.success(function (data, status) {
 					factory.deferred.resolve(data);
 				})
@@ -48,7 +48,7 @@ app.factory('TanFactory', ['$http', '$q', function ($http, $q) {
 			// if (factory.waitingTime !== null && factory.waitingTime.stationCode === stationCode) {
 			// 	factory.deferred.resolve(factory.waitingTime.data);
 			// } else {
-				$http.get("https://open.tan.fr/ewp/tempsattente.json/" + stationCode)
+				$http.get("http://open.tan.fr/ewp/tempsattente.json/" + stationCode)
 					.success(function (data, status) {
 						factory.waitingTime = {};
 						factory.waitingTime.stationCode = stationCode;
@@ -67,7 +67,7 @@ app.factory('TanFactory', ['$http', '$q', function ($http, $q) {
 		getStationTimeTables: function (stationCode, numLine, direction) {
 			factory.deferred = $q.defer();
 
-			$http.get("https://open.tan.fr/ewp/horairesarret.json/" + stationCode + "/" + numLine + "/" + direction)
+			$http.get("http://open.tan.fr/ewp/horairesarret.json/" + stationCode + "/" + numLine + "/" + direction)
 				.success(function (data, status) {
 					factory.deferred.resolve(data);
 				})
